@@ -19,7 +19,6 @@ export const useEquipment = (): UseQueryResult<Equipment[], Error> => {
   });
 };
 
-
 export const useEquipmentDetail = (id: number): UseQueryResult<Equipment, Error> => {
   return useQuery({
     queryKey: equipmentKeys.detail(id),
@@ -43,13 +42,6 @@ export const useAllHistory = (): UseQueryResult<EquipmentStateChange[], Error> =
   });
 };
 
-export const useLatestStatus = (id: number): UseQueryResult<EquipmentStateChange, Error> => {
-  return useQuery({
-    queryKey: equipmentKeys.status(id),
-    queryFn: () => equipmentApi.getLatestStatus(id),
-    enabled: !!id,
-  });
-};
 
 export const useChangeEquipmentState = (): UseMutationResult<
   EquipmentStateChange,

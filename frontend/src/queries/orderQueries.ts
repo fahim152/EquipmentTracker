@@ -20,26 +20,11 @@ export const useOrders = (): UseQueryResult<Order[], Error> => {
   });
 };
 
-export const useOrder = (id: number): UseQueryResult<Order, Error> => {
-  return useQuery({
-    queryKey: orderKeys.detail(id),
-    queryFn: () => orderApi.getOrderById(id),
-    enabled: !!id,
-  });
-};
-
 export const useOrdersByEquipment = (equipmentId: number): UseQueryResult<Order[], Error> => {
   return useQuery({
     queryKey: orderKeys.byEquipment(equipmentId),
     queryFn: () => orderApi.getOrdersByEquipment(equipmentId),
     enabled: !!equipmentId,
-  });
-};
-
-export const useOrdersByStatus = (status: OrderStatus): UseQueryResult<Order[], Error> => {
-  return useQuery({
-    queryKey: orderKeys.byStatus(status),
-    queryFn: () => orderApi.getOrdersByStatus(status),
   });
 };
 

@@ -128,7 +128,10 @@ The application includes:
 - View equipment state history
 - Real-time state updates
 
-**Order Display:**
+**Order Management:**
+- Create new orders
+- Update existing orders
+- Delete orders
 - View current orders
 - View scheduled orders
 - View order progress
@@ -141,34 +144,31 @@ The application includes:
 
 ### Backend API Only (No UI)
 
-**Order Management:**
-- Update order status (POST /order/{id}/status/{status})
-- Update order progress (POST /order/{id}/progress)
-- Schedule orders (POST /order/schedule)
-
-These backend APIs are fully functional and tested, but order management UI forms were not implemented due to time constraints. The Supervisor Dashboard displays all order information.
+None - All implemented backend APIs have corresponding UI components.
 
 ## API Endpoints
 
-Equipment:
+**Equipment:**
 - GET /equipment - List all equipment
-- GET /equipment/{id} - Get equipment details
+- GET /equipment/{id} - Get equipment details with current order and scheduled orders
 - POST /equipment/{id}/state - Change equipment state
 - GET /equipment/history - Get all state changes
 - GET /equipment/{id}/history - Get equipment state history
+- GET /equipment/{id}/status - Get equipment current status
 
-Orders:
+**Orders:**
 - GET /order - List all orders
 - GET /order/{id} - Get order details
 - GET /order/equipment/{equipmentId} - Orders by equipment
 - GET /order/status/{status} - Orders by status
+- GET /order/scheduled - List all scheduled orders
+- GET /order/scheduled/equipment/{equipmentId} - Scheduled orders by equipment
 - POST /order - Create new order
 - PUT /order/{id} - Update order
 - DELETE /order/{id} - Delete order
-- POST /order/{id}/status/{status} - Update order status (Pending/Scheduled/InProgress/Completed/Cancelled)
-- POST /order/{id}/progress - Update production progress
-- GET /order/scheduled - List scheduled orders
-- POST /order/schedule - Schedule an order
+
+**Health:**
+- GET /health - System health status (includes Pulsar connection status)
 
 ## Technology Stack
 
