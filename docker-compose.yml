@@ -1,0 +1,68 @@
+
+services:
+  pulsar:
+    image: apachepulsar/pulsar:latest
+    container_name: equipment-tracker-pulsar
+    ports:
+      - "6689:6650"
+      - "8040:8080"
+    command: bin/pulsar standalone
+    volumes:
+      - pulsar-data:/pulsar/data
+    environment:
+      - PULSAR_MEM=-Xms512m -Xmx512m
+    healthcheck:
+      test: ["CMD", "bin/pulsar-admin", "brokers", "healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - equipment-tracker-network
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: equipment-tracker-backend
+    ports:
+      - "5156:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=DataSource=/app/data/equipment.db
+      - PulsarUrl=pulsar://pulsar:6650
+    volumes:
+      - backend-data:/app/data
+    depends_on:
+      - pulsar
+    networks:
+      - equipment-tracker-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        - REACT_APP_API_URL=http://localhost:5156
+    container_name: equipment-tracker-frontend
+    ports:
+      - "3050:80"
+    depends_on:
+      - backend
+    networks:
+      - equipment-tracker-network
+    restart: unless-stopped
+
+volumes:
+  pulsar-data:
+    driver: local
+  backend-data:
+    driver: local
+
+networks:
+  equipment-tracker-network:
+    driver: bridge
+
