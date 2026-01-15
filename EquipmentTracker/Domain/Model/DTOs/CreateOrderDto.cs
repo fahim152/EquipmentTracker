@@ -1,0 +1,30 @@
+using System;
+using System.ComponentModel.DataAnnotations;
+using EquipmentTracker.Domain.Model;
+
+namespace EquipmentTracker.Domain.Model.DTOs
+{
+    [DateRangeValidation]
+    public class CreateOrderDto
+    {
+        [Required(ErrorMessage = "Order number is required")]
+        [StringLength(100, ErrorMessage = "Order number cannot exceed 100 characters")]
+        public string OrderNumber { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Product name is required")]
+        [StringLength(200, ErrorMessage = "Product name cannot exceed 200 characters")]
+        public string ProductName { get; set; } = string.Empty;
+
+        [Range(1, int.MaxValue, ErrorMessage = "Quantity requested must be greater than zero")]
+        public int QuantityRequested { get; set; }
+
+        public OrderPriority Priority { get; set; } = OrderPriority.Normal;
+
+        public DateTime? ScheduledStartTime { get; set; }
+
+        public DateTime? EstimatedEndTime { get; set; }
+
+        public int? AssignedEquipmentId { get; set; }
+    }
+}
+

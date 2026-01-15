@@ -115,6 +115,22 @@ const CreateOrderModal: React.FC<CreateOrderModalProps> = ({
       return;
     }
 
+    if (formData.scheduledStartTime && formData.estimatedEndTime) {
+      const startTime = new Date(formData.scheduledStartTime);
+      const endTime = new Date(formData.estimatedEndTime);
+      
+      if (endTime <= startTime) {
+        toast({
+          title: 'Invalid Date Range',
+          description: 'Estimated end time must be after the scheduled start time',
+          status: 'error',
+          duration: 4000,
+          isClosable: true,
+        });
+        return;
+      }
+    }
+
     if (equipmentState === EquipmentState.Red) {
       const confirmed = window.confirm(
         `WARNING: ${equipmentName} is currently in RED state (Standing Still).\n\n` +
@@ -230,6 +246,7 @@ const CreateOrderModal: React.FC<CreateOrderModalProps> = ({
               <FormLabel fontSize="sm">Estimated End Time</FormLabel>
               <Input
                 type="datetime-local"
+                min={formData.scheduledStartTime || undefined}
                 value={formData.estimatedEndTime}
                 onChange={(e) => setFormData({ ...formData, estimatedEndTime: e.target.value })}
               />

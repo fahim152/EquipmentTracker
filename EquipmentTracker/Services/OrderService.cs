@@ -56,6 +56,7 @@ namespace EquipmentTracker.Services
 
         public async Task<Order> CreateOrderAsync(Order order)
         {
+
             if (order.AssignedEquipmentId.HasValue && order.ScheduledStartTime.HasValue)
             {
                 var existingOrders = await _orderRepository.GetOrdersByEquipmentIdAsync(order.AssignedEquipmentId.Value);

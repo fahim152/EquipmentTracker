@@ -92,6 +92,22 @@ const EditOrderModal: React.FC<EditOrderModalProps> = ({
       return;
     }
 
+    if (formData.scheduledStartTime && formData.estimatedEndTime) {
+      const startTime = new Date(formData.scheduledStartTime);
+      const endTime = new Date(formData.estimatedEndTime);
+      
+      if (endTime <= startTime) {
+        toast({
+          title: 'Invalid Date Range',
+          description: 'Estimated end time must be after the scheduled start time',
+          status: 'error',
+          duration: 4000,
+          isClosable: true,
+        });
+        return;
+      }
+    }
+
     updateOrderMutation.mutate();
   };
 

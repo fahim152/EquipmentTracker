@@ -1,4 +1,5 @@
 using EquipmentTracker.Domain.Model;
+using EquipmentTracker.Domain.Model.DTOs;
 using EquipmentTracker.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -56,10 +57,26 @@ namespace EquipmentTracker.Api.Controller
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> Create([FromBody] Order order)
+        public async Task<ActionResult<Order>> Create([FromBody] CreateOrderDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
+                var order = new Order
+                {
+                    OrderNumber = dto.OrderNumber,
+                    ProductName = dto.ProductName,
+                    QuantityRequested = dto.QuantityRequested,
+                    Priority = dto.Priority,
+                    ScheduledStartTime = dto.ScheduledStartTime,
+                    AssignedEquipmentId = dto.AssignedEquipmentId,
+                    QuantityProduced = 0
+                };
+
                 var createdOrder = await _orderService.CreateOrderAsync(order);
                 return CreatedAtAction(nameof(Get), new { id = createdOrder.Id }, createdOrder);
             }
@@ -70,11 +87,27 @@ namespace EquipmentTracker.Api.Controller
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Order order)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateOrderDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
-                order.Id = id;
+                var order = await _orderService.GetOrderByIdAsync(id);
+                if (order == null)
+                {
+                    return NotFound();
+                }
+
+                order.OrderNumber = dto.OrderNumber;
+                order.ProductName = dto.ProductName;
+                order.QuantityRequested = dto.QuantityRequested;
+                order.Priority = dto.Priority;
+                order.ScheduledStartTime = dto.ScheduledStartTime;
+
                 await _orderService.UpdateOrderAsync(order);
                 return NoContent();
             }
