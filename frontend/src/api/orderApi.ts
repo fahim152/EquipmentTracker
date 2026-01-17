@@ -1,4 +1,4 @@
-import { Order, OrderStatus, ScheduledOrder } from '../types/equipment';
+import { Order, OrderStatus } from '../types/equipment';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
@@ -85,13 +85,13 @@ export const orderApi = {
     return response.json();
   },
 
-  getAllScheduledOrders: async (): Promise<ScheduledOrder[]> => {
+  getAllScheduledOrders: async (): Promise<Order[]> => {
     const response = await fetch(`${API_BASE_URL}/order/scheduled`);
     if (!response.ok) throw new Error('Failed to fetch scheduled orders');
     return response.json();
   },
 
-  getScheduledOrdersByEquipment: async (equipmentId: number): Promise<ScheduledOrder[]> => {
+  getScheduledOrdersByEquipment: async (equipmentId: number): Promise<Order[]> => {
     const response = await fetch(`${API_BASE_URL}/order/scheduled/equipment/${equipmentId}`);
     if (!response.ok) throw new Error('Failed to fetch scheduled orders');
     return response.json();

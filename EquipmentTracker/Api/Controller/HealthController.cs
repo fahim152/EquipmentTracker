@@ -48,6 +48,7 @@ namespace EquipmentTracker.Api.Controller
         {
             try
             {
+                // use canConnect or a simple query to verify database connectivity ?  
                 var count = await _context.Equipment.CountAsync();
                 response.Database.IsHealthy = true;
                 response.Database.Message = "Database connection successful";

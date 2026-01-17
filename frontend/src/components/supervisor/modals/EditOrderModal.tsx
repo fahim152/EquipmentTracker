@@ -50,7 +50,7 @@ const EditOrderModal: React.FC<EditOrderModalProps> = ({
         quantityRequested: order.quantityRequested,
         priority: order.priority,
         scheduledStartTime: order.scheduledStartTime ? new Date(order.scheduledStartTime).toISOString().slice(0, 16) : '',
-        estimatedEndTime: '', 
+        estimatedEndTime: order.estimatedEndTime ? new Date(order.estimatedEndTime).toISOString().slice(0, 16) : '',
       });
     }
   }, [order]);
@@ -166,6 +166,16 @@ const EditOrderModal: React.FC<EditOrderModalProps> = ({
                 type="datetime-local"
                 value={formData.scheduledStartTime}
                 onChange={(e) => setFormData({ ...formData, scheduledStartTime: e.target.value })}
+              />
+            </FormControl>
+
+            <FormControl>
+              <FormLabel fontSize="sm">Estimated End Time</FormLabel>
+              <Input
+                type="datetime-local"
+                min={formData.scheduledStartTime || undefined}
+                value={formData.estimatedEndTime}
+                onChange={(e) => setFormData({ ...formData, estimatedEndTime: e.target.value })}
               />
             </FormControl>
           </VStack>

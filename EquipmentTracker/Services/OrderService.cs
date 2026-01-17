@@ -44,12 +44,12 @@ namespace EquipmentTracker.Services
         }
 
 
-        public async Task<IEnumerable<ScheduledOrder>> GetScheduledOrdersByEquipmentIdAsync(int equipmentId)
+        public async Task<IEnumerable<Order>> GetScheduledOrdersByEquipmentIdAsync(int equipmentId)
         {
             return await _orderRepository.GetScheduledOrdersByEquipmentIdAsync(equipmentId);
         }
 
-        public async Task<IEnumerable<ScheduledOrder>> GetAllScheduledOrdersAsync()
+        public async Task<IEnumerable<Order>> GetAllScheduledOrdersAsync()
         {
             return await _orderRepository.GetAllScheduledOrdersAsync();
         }

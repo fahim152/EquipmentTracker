@@ -99,44 +99,19 @@ namespace EquipmentTracker.Data
 
             var orders = new List<Order>
             {
-                new Order { Id = 1, OrderNumber = "ORD-2026-001", ProductName = "Classic Brick 2x4 Red", QuantityRequested = 50000, QuantityProduced = 35000, CreatedAt = now.AddDays(-2), ScheduledStartTime = now.AddHours(-3), ActualStartTime = now.AddHours(-2), Status = OrderStatus.InProgress, Priority = OrderPriority.High, AssignedEquipmentId = 1 },
-                new Order { Id = 2, OrderNumber = "ORD-2026-002", ProductName = "Classic Brick 2x4 Blue", QuantityRequested = 45000, QuantityProduced = 42000, CreatedAt = now.AddDays(-2), ScheduledStartTime = now.AddHours(-4), ActualStartTime = now.AddHours(-3), Status = OrderStatus.InProgress, Priority = OrderPriority.Normal, AssignedEquipmentId = 2 },
-                new Order { Id = 3, OrderNumber = "ORD-2026-003", ProductName = "Technic Gear 16 Tooth", QuantityRequested = 30000, QuantityProduced = 0, CreatedAt = now.AddDays(-1), ScheduledStartTime = now.AddHours(1), Status = OrderStatus.Scheduled, Priority = OrderPriority.Normal, AssignedEquipmentId = 3 },
-                new Order { Id = 4, OrderNumber = "ORD-2026-004", ProductName = "Minifig Head", QuantityRequested = 25000, QuantityProduced = 0, CreatedAt = now.AddDays(-1), ScheduledStartTime = now.AddHours(2), Status = OrderStatus.Scheduled, Priority = OrderPriority.Low, AssignedEquipmentId = 6 },
-                new Order { Id = 5, OrderNumber = "ORD-2026-005", ProductName = "Plate 2x2", QuantityRequested = 100000, QuantityProduced = 75000, CreatedAt = now.AddDays(-3), ScheduledStartTime = now.AddHours(-5), ActualStartTime = now.AddHours(-4), Status = OrderStatus.InProgress, Priority = OrderPriority.Critical, AssignedEquipmentId = 9 },
-                new Order { Id = 6, OrderNumber = "ORD-2026-006", ProductName = "Slope Brick 45", QuantityRequested = 35000, QuantityProduced = 33000, CreatedAt = now.AddDays(-2), ScheduledStartTime = now.AddHours(-3), ActualStartTime = now.AddHours(-2), Status = OrderStatus.InProgress, Priority = OrderPriority.High, AssignedEquipmentId = 10 },
-                new Order { Id = 7, OrderNumber = "ORD-2026-007", ProductName = "Window Frame 1x2x2", QuantityRequested = 20000, QuantityProduced = 18000, CreatedAt = now.AddDays(-1), ScheduledStartTime = now.AddHours(-2), ActualStartTime = now.AddHours(-1), Status = OrderStatus.InProgress, Priority = OrderPriority.Normal, AssignedEquipmentId = 11 },
-                new Order { Id = 8, OrderNumber = "ORD-2026-008", ProductName = "Wheel Rim", QuantityRequested = 15000, QuantityProduced = 0, CreatedAt = now.AddHours(-6), ScheduledStartTime = now.AddHours(3), Status = OrderStatus.Scheduled, Priority = OrderPriority.Normal, AssignedEquipmentId = 14 },
-                new Order { Id = 9, OrderNumber = "ORD-2026-009", ProductName = "Baseplate Green", QuantityRequested = 5000, QuantityProduced = 0, CreatedAt = now.AddHours(-4), ScheduledStartTime = now.AddHours(4), Status = OrderStatus.Scheduled, Priority = OrderPriority.Low, AssignedEquipmentId = 17 },
-                new Order { Id = 10, OrderNumber = "ORD-2026-010", ProductName = "Tile 1x1", QuantityRequested = 80000, QuantityProduced = 65000, CreatedAt = now.AddDays(-2), ScheduledStartTime = now.AddHours(-4), ActualStartTime = now.AddHours(-3), Status = OrderStatus.InProgress, Priority = OrderPriority.High, AssignedEquipmentId = 19 },
+                new Order { Id = 1, OrderNumber = "ORD-2026-001", ProductName = "Classic Brick 2x4 Red", QuantityRequested = 50000, QuantityProduced = 35000, CreatedAt = now.AddDays(-2), ScheduledStartTime = now.AddHours(-3), EstimatedEndTime = now.AddHours(2), ActualStartTime = now.AddHours(-2), Status = OrderStatus.InProgress, Priority = OrderPriority.High, AssignedEquipmentId = 1 },
+                new Order { Id = 2, OrderNumber = "ORD-2026-002", ProductName = "Classic Brick 2x4 Blue", QuantityRequested = 45000, QuantityProduced = 42000, CreatedAt = now.AddDays(-2), ScheduledStartTime = now.AddHours(-4), EstimatedEndTime = now.AddHours(1), ActualStartTime = now.AddHours(-3), Status = OrderStatus.InProgress, Priority = OrderPriority.Normal, AssignedEquipmentId = 2 },
+                new Order { Id = 3, OrderNumber = "ORD-2026-003", ProductName = "Technic Gear 16 Tooth", QuantityRequested = 30000, QuantityProduced = 0, CreatedAt = now.AddDays(-1), ScheduledStartTime = now.AddHours(1), EstimatedEndTime = now.AddHours(6), Status = OrderStatus.Scheduled, Priority = OrderPriority.Normal, AssignedEquipmentId = 3 },
+                new Order { Id = 4, OrderNumber = "ORD-2026-004", ProductName = "Minifig Head", QuantityRequested = 25000, QuantityProduced = 0, CreatedAt = now.AddDays(-1), ScheduledStartTime = now.AddHours(2), EstimatedEndTime = now.AddHours(7), Status = OrderStatus.Scheduled, Priority = OrderPriority.Low, AssignedEquipmentId = 6 },
+                new Order { Id = 5, OrderNumber = "ORD-2026-005", ProductName = "Plate 2x2", QuantityRequested = 100000, QuantityProduced = 75000, CreatedAt = now.AddDays(-3), ScheduledStartTime = now.AddHours(-5), EstimatedEndTime = now.AddHours(3), ActualStartTime = now.AddHours(-4), Status = OrderStatus.InProgress, Priority = OrderPriority.Critical, AssignedEquipmentId = 9 },
+                new Order { Id = 6, OrderNumber = "ORD-2026-006", ProductName = "Slope Brick 45", QuantityRequested = 35000, QuantityProduced = 33000, CreatedAt = now.AddDays(-2), ScheduledStartTime = now.AddHours(-3), EstimatedEndTime = now.AddHours(2), ActualStartTime = now.AddHours(-2), Status = OrderStatus.InProgress, Priority = OrderPriority.High, AssignedEquipmentId = 10 },
+                new Order { Id = 7, OrderNumber = "ORD-2026-007", ProductName = "Window Frame 1x2x2", QuantityRequested = 20000, QuantityProduced = 18000, CreatedAt = now.AddDays(-1), ScheduledStartTime = now.AddHours(-2), EstimatedEndTime = now.AddHours(3), ActualStartTime = now.AddHours(-1), Status = OrderStatus.InProgress, Priority = OrderPriority.Normal, AssignedEquipmentId = 11 },
+                new Order { Id = 8, OrderNumber = "ORD-2026-008", ProductName = "Wheel Rim", QuantityRequested = 15000, QuantityProduced = 0, CreatedAt = now.AddHours(-6), ScheduledStartTime = now.AddHours(3), EstimatedEndTime = now.AddHours(8), Status = OrderStatus.Scheduled, Priority = OrderPriority.Normal, AssignedEquipmentId = 14 },
+                new Order { Id = 9, OrderNumber = "ORD-2026-009", ProductName = "Baseplate Green", QuantityRequested = 5000, QuantityProduced = 0, CreatedAt = now.AddHours(-4), ScheduledStartTime = now.AddHours(4), EstimatedEndTime = now.AddHours(9), Status = OrderStatus.Scheduled, Priority = OrderPriority.Low, AssignedEquipmentId = 17 },
+                new Order { Id = 10, OrderNumber = "ORD-2026-010", ProductName = "Tile 1x1", QuantityRequested = 80000, QuantityProduced = 65000, CreatedAt = now.AddDays(-2), ScheduledStartTime = now.AddHours(-4), EstimatedEndTime = now.AddHours(4), ActualStartTime = now.AddHours(-3), Status = OrderStatus.InProgress, Priority = OrderPriority.High, AssignedEquipmentId = 19 },
             };
 
             context.Orders.AddRange(orders);
-            context.SaveChanges();
-
-            equipment[0].CurrentOrderId = 1;
-            equipment[1].CurrentOrderId = 2;
-            equipment[8].CurrentOrderId = 5;
-            equipment[9].CurrentOrderId = 6;
-            equipment[10].CurrentOrderId = 7;
-            equipment[18].CurrentOrderId = 10;
-            context.SaveChanges();
-
-            var scheduledOrders = new List<ScheduledOrder>
-            {
-                new ScheduledOrder { Id = 1, EquipmentId = 1, OrderId = 1, SequenceNumber = 1, ScheduledStartTime = now.AddHours(-3), EstimatedEndTime = now.AddHours(2) },
-                new ScheduledOrder { Id = 2, EquipmentId = 2, OrderId = 2, SequenceNumber = 1, ScheduledStartTime = now.AddHours(-4), EstimatedEndTime = now.AddHours(1) },
-                new ScheduledOrder { Id = 3, EquipmentId = 3, OrderId = 3, SequenceNumber = 1, ScheduledStartTime = now.AddHours(1), EstimatedEndTime = now.AddHours(6) },
-                new ScheduledOrder { Id = 4, EquipmentId = 6, OrderId = 4, SequenceNumber = 1, ScheduledStartTime = now.AddHours(2), EstimatedEndTime = now.AddHours(7) },
-                new ScheduledOrder { Id = 5, EquipmentId = 9, OrderId = 5, SequenceNumber = 1, ScheduledStartTime = now.AddHours(-5), EstimatedEndTime = now.AddHours(3) },
-                new ScheduledOrder { Id = 6, EquipmentId = 10, OrderId = 6, SequenceNumber = 1, ScheduledStartTime = now.AddHours(-3), EstimatedEndTime = now.AddHours(2) },
-                new ScheduledOrder { Id = 7, EquipmentId = 11, OrderId = 7, SequenceNumber = 1, ScheduledStartTime = now.AddHours(-2), EstimatedEndTime = now.AddHours(3) },
-                new ScheduledOrder { Id = 8, EquipmentId = 14, OrderId = 8, SequenceNumber = 1, ScheduledStartTime = now.AddHours(3), EstimatedEndTime = now.AddHours(8) },
-                new ScheduledOrder { Id = 9, EquipmentId = 17, OrderId = 9, SequenceNumber = 1, ScheduledStartTime = now.AddHours(4), EstimatedEndTime = now.AddHours(9) },
-                new ScheduledOrder { Id = 10, EquipmentId = 19, OrderId = 10, SequenceNumber = 1, ScheduledStartTime = now.AddHours(-4), EstimatedEndTime = now.AddHours(4) },
-            };
-
-            context.ScheduledOrders.AddRange(scheduledOrders);
             context.SaveChanges();
         }
     }

@@ -17,9 +17,6 @@ namespace EquipmentTracker.Repositories
         public async Task<Equipment?> GetByIdAsync(int id)
         {
             return await _context.Equipment
-                .Include(e => e.CurrentOrder)
-                .Include(e => e.ScheduledOrders)
-                    .ThenInclude(so => so.Order)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
@@ -27,7 +24,6 @@ namespace EquipmentTracker.Repositories
         public async Task<IEnumerable<Equipment>> GetAllAsync()
         {
             return await _context.Equipment
-                .Include(e => e.CurrentOrder)
                 .AsNoTracking()
                 .ToListAsync();
         }

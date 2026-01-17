@@ -33,9 +33,9 @@ namespace EquipmentTracker.Domain.Model.DTOs
                 }
             }
 
-            if (scheduledStartTime.HasValue && scheduledStartTime.Value < DateTime.UtcNow)
+            if (estimatedEndTime.HasValue && estimatedEndTime.Value < DateTime.UtcNow)
             {
-                return new ValidationResult("Scheduled start time cannot be in the past");
+                return new ValidationResult("Estimated end time cannot be in the past");
             }
 
             return ValidationResult.Success;

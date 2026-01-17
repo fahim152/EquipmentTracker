@@ -45,13 +45,13 @@ namespace EquipmentTracker.Api.Controller
         }
    
         [HttpGet("scheduled")]
-        public async Task<IEnumerable<ScheduledOrder>> GetAllScheduled()
+        public async Task<IEnumerable<Order>> GetAllScheduled()
         {
             return await _orderService.GetAllScheduledOrdersAsync();
         }
 
         [HttpGet("scheduled/equipment/{equipmentId}")]
-        public async Task<IEnumerable<ScheduledOrder>> GetScheduledByEquipment(int equipmentId)
+        public async Task<IEnumerable<Order>> GetScheduledByEquipment(int equipmentId)
         {
             return await _orderService.GetScheduledOrdersByEquipmentIdAsync(equipmentId);
         }
@@ -73,6 +73,7 @@ namespace EquipmentTracker.Api.Controller
                     QuantityRequested = dto.QuantityRequested,
                     Priority = dto.Priority,
                     ScheduledStartTime = dto.ScheduledStartTime,
+                    EstimatedEndTime = dto.EstimatedEndTime,
                     AssignedEquipmentId = dto.AssignedEquipmentId,
                     QuantityProduced = 0
                 };
@@ -107,6 +108,7 @@ namespace EquipmentTracker.Api.Controller
                 order.QuantityRequested = dto.QuantityRequested;
                 order.Priority = dto.Priority;
                 order.ScheduledStartTime = dto.ScheduledStartTime;
+                order.EstimatedEndTime = dto.EstimatedEndTime;
 
                 await _orderService.UpdateOrderAsync(order);
                 return NoContent();

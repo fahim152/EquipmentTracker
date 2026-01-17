@@ -12,6 +12,7 @@ namespace EquipmentTracker.Domain.Model
         public int QuantityProduced { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? ScheduledStartTime { get; set; }
+        public DateTime? EstimatedEndTime { get; set; }
         public DateTime? ActualStartTime { get; set; }
         public DateTime? CompletedAt { get; set; }
         public OrderStatus Status { get; set; }

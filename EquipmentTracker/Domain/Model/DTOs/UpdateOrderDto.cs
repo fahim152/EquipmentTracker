@@ -21,7 +21,7 @@ namespace EquipmentTracker.Domain.Model.DTOs
         public OrderPriority Priority { get; set; }
 
         public DateTime? ScheduledStartTime { get; set; }
-
+        
         public DateTime? EstimatedEndTime { get; set; }
     }
 }

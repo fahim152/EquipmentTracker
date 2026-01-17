@@ -111,7 +111,13 @@ const SupervisorDashboard: React.FC = () => {
 
   const selectedEquipment = selectedEquipmentDetail || equipment?.find(e => e.id === selectedEquipmentId);
   const equipmentOrders = orders?.filter(o => o.assignedEquipmentId === selectedEquipmentId) || [];
-  const equipmentScheduled = scheduledOrders?.filter(so => so.equipmentId === selectedEquipmentId) || [];
+  const equipmentScheduled = scheduledOrders?.filter(o => o.assignedEquipmentId === selectedEquipmentId) || [];
+
+  const getCurrentOrder = (equipmentId: number): Order | undefined => {
+    return orders?.find(o => o.assignedEquipmentId === equipmentId && o.status === OrderStatus.InProgress);
+  };
+
+  const currentOrder = selectedEquipmentId ? getCurrentOrder(selectedEquipmentId) : undefined;
 
   const getStateStats = () => {
     if (!equipment) return { red: 0, yellow: 0, green: 0 };
@@ -209,26 +215,26 @@ const SupervisorDashboard: React.FC = () => {
                     {item.currentState}
                   </Badge>
                 </HStack>
-                {item.currentOrder && (
+                {getCurrentOrder(item.id) && (
                   <VStack align="stretch" spacing={2} mt={2} pt={2} borderTop="1px" borderColor="gray.200">
                     <Text fontSize="xs" color="primary.500" fontWeight="semibold">
-                      {item.currentOrder.orderNumber}
+                      {getCurrentOrder(item.id)?.orderNumber}
                     </Text>
                     <Text fontSize="xs" color="gray.600">
-                      {item.currentOrder.productName}
+                      {getCurrentOrder(item.id)?.productName}
                     </Text>
                     <Progress
-                      value={getProgress(item.currentOrder)}
+                      value={getProgress(getCurrentOrder(item.id)!)}
                       size="sm"
                       colorScheme="blue"
                       borderRadius="full"
                     />
                     <Text fontSize="xs" color="gray.600">
-                      {item.currentOrder.quantityProduced} / {item.currentOrder.quantityRequested}
+                      {getCurrentOrder(item.id)?.quantityProduced} / {getCurrentOrder(item.id)?.quantityRequested}
                     </Text>
                   </VStack>
                 )}
-                {!item.currentOrder && (
+                {!getCurrentOrder(item.id) && (
                   <Text fontSize="xs" color="gray.400" fontStyle="italic" mt={2}>
                     Idle
                   </Text>
@@ -275,39 +281,39 @@ const SupervisorDashboard: React.FC = () => {
                 </HStack>
               </HStack>
 
-              {selectedEquipment.currentOrder && (
+              {currentOrder && (
                 <Box>
                   <Heading size="sm" mb={3}>Current Order</Heading>
                   <Box bg="gray.50" border="2px" borderColor="gray.200" borderRadius="lg" p={4}>
                     <HStack justify="space-between" mb={2}>
                       <Text fontSize="lg" fontWeight="bold" color="primary.500">
-                        {selectedEquipment.currentOrder.orderNumber}
+                        {currentOrder.orderNumber}
                       </Text>
-                      <Badge colorScheme={getPriorityColor(selectedEquipment.currentOrder.priority)}>
-                        {selectedEquipment.currentOrder.priority}
+                      <Badge colorScheme={getPriorityColor(currentOrder.priority)}>
+                        {currentOrder.priority}
                       </Badge>
                     </HStack>
-                    <Text fontSize="md" mb={4}>{selectedEquipment.currentOrder.productName}</Text>
+                    <Text fontSize="md" mb={4}>{currentOrder.productName}</Text>
                     <SimpleGrid columns={3} spacing={3} mb={3}>
                       <Box>
                         <Text fontSize="xs" color="gray.600" mb={1}>Progress</Text>
-                        <Text fontSize="xl" fontWeight="bold">{getProgress(selectedEquipment.currentOrder)}%</Text>
+                        <Text fontSize="xl" fontWeight="bold">{getProgress(currentOrder)}%</Text>
                       </Box>
                       <Box>
                         <Text fontSize="xs" color="gray.600" mb={1}>Produced</Text>
-                        <Text fontSize="xl" fontWeight="bold">{selectedEquipment.currentOrder.quantityProduced}</Text>
+                        <Text fontSize="xl" fontWeight="bold">{currentOrder.quantityProduced}</Text>
                       </Box>
                       <Box>
                         <Text fontSize="xs" color="gray.600" mb={1}>Target</Text>
-                        <Text fontSize="xl" fontWeight="bold">{selectedEquipment.currentOrder.quantityRequested}</Text>
+                        <Text fontSize="xl" fontWeight="bold">{currentOrder.quantityRequested}</Text>
                       </Box>
                     </SimpleGrid>
-                    {selectedEquipment.currentOrder.actualStartTime && (
+                    {currentOrder.actualStartTime && (
                       <Box pt={3} borderTop="1px" borderColor="gray.200">
                         <HStack justify="space-between" fontSize="sm">
                           <Text color="gray.600">Started:</Text>
                           <Text fontWeight="medium">
-                            {new Date(selectedEquipment.currentOrder.actualStartTime).toLocaleString()}
+                            {new Date(currentOrder.actualStartTime).toLocaleString()}
                           </Text>
                         </HStack>
                       </Box>
@@ -379,13 +385,13 @@ const SupervisorDashboard: React.FC = () => {
                 <Box>
                   <Heading size="sm" mb={3}>Scheduled Orders ({equipmentScheduled.length})</Heading>
                   <VStack spacing={2}>
-                    {equipmentScheduled.map((scheduled) => (
-                      <Box key={scheduled.id} bg="gray.50" border="1px" borderColor="gray.200" borderRadius="lg" p={3} w="full">
+                    {equipmentScheduled.map((order, index) => (
+                      <Box key={order.id} bg="gray.50" border="1px" borderColor="gray.200" borderRadius="lg" p={3} w="full">
                         <HStack justify="space-between" mb={1}>
                           <HStack spacing={2}>
-                            <Badge colorScheme="blue" fontSize="xs">#{scheduled.sequenceNumber}</Badge>
+                            <Badge colorScheme="blue" fontSize="xs">#{index + 1}</Badge>
                             <Text fontSize="sm" fontWeight="semibold" color="primary.500">
-                              {scheduled.order?.orderNumber}
+                              {order.orderNumber}
                             </Text>
                           </HStack>
                           <HStack spacing={1}>
@@ -394,7 +400,7 @@ const SupervisorDashboard: React.FC = () => {
                               variant="ghost"
                               colorScheme="blue"
                               onClick={() => {
-                                setOrderToEdit(scheduled.order || null);
+                                setOrderToEdit(order);
                                 setIsEditModalOpen(true);
                               }}
                             >
@@ -405,10 +411,8 @@ const SupervisorDashboard: React.FC = () => {
                               variant="ghost"
                               colorScheme="red"
                               onClick={() => {
-                                if (window.confirm(`Delete order ${scheduled.order?.orderNumber}?`)) {
-                                  if (scheduled.order?.id) {
-                                    deleteOrderMutation.mutate(scheduled.order.id);
-                                  }
+                                if (window.confirm(`Delete order ${order.orderNumber}?`)) {
+                                  deleteOrderMutation.mutate(order.id);
                                 }
                               }}
                             >
@@ -416,16 +420,18 @@ const SupervisorDashboard: React.FC = () => {
                             </Button>
                           </HStack>
                         </HStack>
-                        <Text fontSize="sm" mb={2}>{scheduled.order?.productName}</Text>
+                        <Text fontSize="sm" mb={2}>{order.productName}</Text>
                         <HStack justify="space-between" fontSize="xs" color="gray.600">
-                          <Text>Start: {new Date(scheduled.scheduledStartTime).toLocaleTimeString()}</Text>
-                          <Text>End: {new Date(scheduled.estimatedEndTime).toLocaleTimeString()}</Text>
+                          {order.scheduledStartTime && (
+                            <Text>Start: {new Date(order.scheduledStartTime).toLocaleTimeString()}</Text>
+                          )}
+                          {order.estimatedEndTime && (
+                            <Text>End: {new Date(order.estimatedEndTime).toLocaleTimeString()}</Text>
+                          )}
                         </HStack>
-                        {scheduled.order && (
-                          <Badge mt={2} colorScheme={getPriorityColor(scheduled.order.priority)} fontSize="xs">
-                            {scheduled.order.priority}
-                          </Badge>
-                        )}
+                        <Badge mt={2} colorScheme={getPriorityColor(order.priority)} fontSize="xs">
+                          {order.priority}
+                        </Badge>
                       </Box>
                     ))}
                   </VStack>

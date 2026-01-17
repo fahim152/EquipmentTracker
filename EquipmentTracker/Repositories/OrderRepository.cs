@@ -50,23 +50,23 @@ namespace EquipmentTracker.Repositories
         }
 
 
-        public async Task<IEnumerable<ScheduledOrder>> GetScheduledOrdersByEquipmentIdAsync(int equipmentId)
+        public async Task<IEnumerable<Order>> GetScheduledOrdersByEquipmentIdAsync(int equipmentId)
         {
-            return await _context.ScheduledOrders
-                .Include(so => so.Order)
+            return await _context.Orders
                 .AsNoTracking()
-                .Where(so => so.EquipmentId == equipmentId)
-                .OrderBy(so => so.SequenceNumber)
+                .Where(o => o.AssignedEquipmentId == equipmentId && 
+                           (o.Status == OrderStatus.Scheduled || o.Status == OrderStatus.Pending))
+                .OrderBy(o => o.ScheduledStartTime)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ScheduledOrder>> GetAllScheduledOrdersAsync()
+        public async Task<IEnumerable<Order>> GetAllScheduledOrdersAsync()
         {
-            return await _context.ScheduledOrders
-                .Include(so => so.Order)
+            return await _context.Orders
                 .AsNoTracking()
-                .OrderBy(so => so.EquipmentId)
-                .ThenBy(so => so.SequenceNumber)
+                .Where(o => o.Status == OrderStatus.Scheduled || o.Status == OrderStatus.Pending)
+                .OrderBy(o => o.AssignedEquipmentId)
+                .ThenBy(o => o.ScheduledStartTime)
                 .ToListAsync();
         }
 
@@ -87,6 +87,7 @@ namespace EquipmentTracker.Repositories
                 existingOrder.QuantityRequested = order.QuantityRequested;
                 existingOrder.QuantityProduced = order.QuantityProduced;
                 existingOrder.ScheduledStartTime = order.ScheduledStartTime;
+                existingOrder.EstimatedEndTime = order.EstimatedEndTime;
                 existingOrder.Priority = order.Priority;
                 existingOrder.AssignedEquipmentId = order.AssignedEquipmentId;
                 

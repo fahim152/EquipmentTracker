@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { orderApi } from '../api/orderApi';
-import { Order, OrderStatus, ScheduledOrder } from '../types/equipment';
+import { Order, OrderStatus } from '../types/equipment';
 
 export const orderKeys = {
   all: ['orders'] as const,
@@ -28,14 +28,14 @@ export const useOrdersByEquipment = (equipmentId: number): UseQueryResult<Order[
   });
 };
 
-export const useScheduledOrders = (): UseQueryResult<ScheduledOrder[], Error> => {
+export const useScheduledOrders = (): UseQueryResult<Order[], Error> => {
   return useQuery({
     queryKey: orderKeys.scheduled(),
     queryFn: orderApi.getAllScheduledOrders,
   });
 };
 
-export const useScheduledOrdersByEquipment = (equipmentId: number): UseQueryResult<ScheduledOrder[], Error> => {
+export const useScheduledOrdersByEquipment = (equipmentId: number): UseQueryResult<Order[], Error> => {
   return useQuery({
     queryKey: orderKeys.scheduledByEquipment(equipmentId),
     queryFn: () => orderApi.getScheduledOrdersByEquipment(equipmentId),

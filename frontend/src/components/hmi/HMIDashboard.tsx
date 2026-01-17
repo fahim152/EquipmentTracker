@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { Equipment, EquipmentState, OrderStatus } from '../../types/equipment';
 import { useChangeEquipmentState, useEquipmentHistory, useEquipmentDetail } from '../../queries/equipmentQueries';
-import { useScheduledOrdersByEquipment, useOrdersByEquipment } from '../../queries/orderQueries';
+import { useOrdersByEquipment } from '../../queries/orderQueries';
 
 interface HMIDashboardProps {
   equipment: Equipment[];
@@ -26,10 +26,11 @@ const HMIDashboard: React.FC<HMIDashboardProps> = ({ equipment }) => {
   const changeStateMutation = useChangeEquipmentState();
   const { data: history } = useEquipmentHistory(selectedEquipmentId ?? 0);
   const { data: selectedEquipmentDetail, isLoading: isLoadingDetail } = useEquipmentDetail(selectedEquipmentId ?? 0);
-  const { data: scheduledOrders } = useScheduledOrdersByEquipment(selectedEquipmentId ?? 0);
   const { data: equipmentOrders } = useOrdersByEquipment(selectedEquipmentId ?? 0);
 
   const selectedEquipment = selectedEquipmentDetail || equipment.find((e) => e.id === selectedEquipmentId);
+
+  const currentOrder = equipmentOrders?.find(order => order.status === OrderStatus.InProgress);
 
   const activeOrders = equipmentOrders?.filter(
     order => order.status === OrderStatus.InProgress || 
@@ -186,28 +187,28 @@ const HMIDashboard: React.FC<HMIDashboardProps> = ({ equipment }) => {
                 </Badge>
               </HStack>
 
-              {selectedEquipment.currentOrder && (
+              {currentOrder && (
                 <Box w="full" bg="blue.50" border="2px" borderColor="primary.500" borderRadius="xl" p={4}>
                   <Text fontSize="xs" color="primary.500" textTransform="uppercase" letterSpacing="wide" mb={1}>
                     Current Order
                   </Text>
                   <Text fontSize="lg" fontWeight="bold" color="primary.500" mb={1}>
-                    {selectedEquipment.currentOrder.orderNumber}
+                    {currentOrder.orderNumber}
                   </Text>
                   <Text fontSize="sm" color="gray.700" mb={3}>
-                    {selectedEquipment.currentOrder.productName}
+                    {currentOrder.productName}
                   </Text>
                   <Box>
                     <HStack justify="space-between" fontSize="sm" fontWeight="semibold" mb={2}>
                       <Text>
-                        {selectedEquipment.currentOrder.quantityProduced} / {selectedEquipment.currentOrder.quantityRequested}
+                        {currentOrder.quantityProduced} / {currentOrder.quantityRequested}
                       </Text>
                       <Text>
-                        {Math.round((selectedEquipment.currentOrder.quantityProduced / selectedEquipment.currentOrder.quantityRequested) * 100)}%
+                        {Math.round((currentOrder.quantityProduced / currentOrder.quantityRequested) * 100)}%
                       </Text>
                     </HStack>
                     <Progress
-                      value={(selectedEquipment.currentOrder.quantityProduced / selectedEquipment.currentOrder.quantityRequested) * 100}
+                      value={(currentOrder.quantityProduced / currentOrder.quantityRequested) * 100}
                       colorScheme="blue"
                       borderRadius="full"
                       size="sm"

@@ -27,6 +27,7 @@ export interface Order {
   quantityProduced: number;
   createdAt: string;
   scheduledStartTime?: string;
+  estimatedEndTime?: string;
   actualStartTime?: string;
   completedAt?: string;
   status: OrderStatus;
@@ -35,24 +36,10 @@ export interface Order {
   assignedEquipment?: Equipment;
 }
 
-export interface ScheduledOrder {
-  id: number;
-  equipmentId: number;
-  orderId: number;
-  sequenceNumber: number;
-  scheduledStartTime: string;
-  estimatedEndTime: string;
-  equipment?: Equipment;
-  order?: Order;
-}
-
 export interface Equipment {
   id: number;
   name: string;
   currentState: EquipmentState;
-  currentOrderId?: number;
-  currentOrder?: Order;
-  scheduledOrders?: ScheduledOrder[];
 }
 
 export interface EquipmentStateChange {
