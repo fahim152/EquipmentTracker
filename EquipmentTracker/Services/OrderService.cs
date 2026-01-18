@@ -62,7 +62,7 @@ namespace EquipmentTracker.Services
             {
                 var existingOrders = await _orderRepository.GetOrdersByEquipmentIdAsync(order.AssignedEquipmentId.Value);
                 
-                var estimatedEndTime = order.ScheduledStartTime.Value.AddHours(2);
+                var newOrderEndTime = order.EstimatedEndTime ?? order.ScheduledStartTime.Value.AddHours(2);
                 
                 foreach (var existingOrder in existingOrders)
                 {
@@ -71,10 +71,10 @@ namespace EquipmentTracker.Services
                     if (existingOrder.ScheduledStartTime.HasValue && 
                         (existingOrder.Status == OrderStatus.Scheduled || existingOrder.Status == OrderStatus.Pending))
                     {
-                        var existingEndTime = existingOrder.ScheduledStartTime.Value.AddHours(2);
+                        var existingEndTime = existingOrder.EstimatedEndTime ?? existingOrder.ScheduledStartTime.Value.AddHours(2);
                         
                         bool hasOverlap = (order.ScheduledStartTime.Value < existingEndTime) && 
-                                         (estimatedEndTime > existingOrder.ScheduledStartTime.Value);
+                                         (newOrderEndTime > existingOrder.ScheduledStartTime.Value);
                         
                         if (hasOverlap)
                         {
@@ -99,7 +99,7 @@ namespace EquipmentTracker.Services
             {
                 var existingOrders = await _orderRepository.GetOrdersByEquipmentIdAsync(order.AssignedEquipmentId.Value);
                 
-                var estimatedEndTime = order.ScheduledStartTime.Value.AddHours(2);
+                var newOrderEndTime = order.EstimatedEndTime ?? order.ScheduledStartTime.Value.AddHours(2);
                 
                 foreach (var existingOrder in existingOrders)
                 {
@@ -108,10 +108,10 @@ namespace EquipmentTracker.Services
                     if (existingOrder.ScheduledStartTime.HasValue && 
                         (existingOrder.Status == OrderStatus.Scheduled || existingOrder.Status == OrderStatus.Pending))
                     {
-                        var existingEndTime = existingOrder.ScheduledStartTime.Value.AddHours(2);
+                        var existingEndTime = existingOrder.EstimatedEndTime ?? existingOrder.ScheduledStartTime.Value.AddHours(2);
                         
                         bool hasOverlap = (order.ScheduledStartTime.Value < existingEndTime) && 
-                                         (estimatedEndTime > existingOrder.ScheduledStartTime.Value);
+                                         (newOrderEndTime > existingOrder.ScheduledStartTime.Value);
                         
                         if (hasOverlap)
                         {
