@@ -59,7 +59,23 @@ namespace EquipmentTracker.Services
                 Timestamp = DateTime.UtcNow,
                 ChangedById = TestUserId
             };
-
+            
+            // potential point of failure - database operation
+            // can add transaction pattern , if one fails everything rolls back
+            
+            //using var transaction = await _context.Database.BeginTransactionAsync();
+            // try
+            // {
+            //     await _equipmentRepository.AddStateChangeAsync(stateChange);
+            //     await _equipmentRepository.UpdateEquipmentStateAsync(equipmentId, newState);
+            //     await transaction.CommitAsync();
+            // }
+            // catch
+            // {
+            //     await transaction.RollbackAsync();
+            //     throw;
+            // }
+            
             await _equipmentRepository.AddStateChangeAsync(stateChange);
             await _equipmentRepository.UpdateEquipmentStateAsync(equipmentId, newState);
 

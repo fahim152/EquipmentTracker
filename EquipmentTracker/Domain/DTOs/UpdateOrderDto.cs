@@ -1,10 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using EquipmentTracker.Domain.Enum;
+using EquipmentTracker.Domain.ValidationAttribute;
 
 namespace EquipmentTracker.Domain.DTOs
 {
-    [DateRangeValidation]
+    [OrderScheduleValidation]
     public class UpdateOrderDto
     {
         [Required(ErrorMessage = "Order number is required")]
