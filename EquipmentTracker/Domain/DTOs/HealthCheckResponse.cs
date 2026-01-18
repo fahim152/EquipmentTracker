@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace EquipmentTracker.Domain.Model
+namespace EquipmentTracker.Domain.DTOs
 {
     public class HealthCheckResponse
     {

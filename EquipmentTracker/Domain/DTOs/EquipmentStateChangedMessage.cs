@@ -1,7 +1,7 @@
 using System;
-using EquipmentTracker.Domain.Model;
+using EquipmentTracker.Domain.Enum;
 
-namespace EquipmentTracker.Services.Events
+namespace EquipmentTracker.Domain.DTOs
 {
     public class EquipmentStateChangedMessage
     {
@@ -14,4 +14,3 @@ namespace EquipmentTracker.Services.Events
         public Guid ChangedById { get; init; }
     }
 }
-

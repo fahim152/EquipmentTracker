@@ -1,5 +1,6 @@
 using System;
 using System.Text.Json.Serialization;
+using EquipmentTracker.Domain.Enum;
 
 namespace EquipmentTracker.Domain.Model
 {

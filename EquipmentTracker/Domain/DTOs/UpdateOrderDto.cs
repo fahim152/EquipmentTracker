@@ -1,11 +1,11 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using EquipmentTracker.Domain.Model;
+using EquipmentTracker.Domain.Enum;
 
-namespace EquipmentTracker.Domain.Model.DTOs
+namespace EquipmentTracker.Domain.DTOs
 {
     [DateRangeValidation]
-    public class CreateOrderDto
+    public class UpdateOrderDto
     {
         [Required(ErrorMessage = "Order number is required")]
         [StringLength(100, ErrorMessage = "Order number cannot exceed 100 characters")]
@@ -18,13 +18,10 @@ namespace EquipmentTracker.Domain.Model.DTOs
         [Range(1, int.MaxValue, ErrorMessage = "Quantity requested must be greater than zero")]
         public int QuantityRequested { get; set; }
 
-        public OrderPriority Priority { get; set; } = OrderPriority.Normal;
+        public OrderPriority Priority { get; set; }
 
         public DateTime? ScheduledStartTime { get; set; }
-
+        
         public DateTime? EstimatedEndTime { get; set; }
-
-        public int? AssignedEquipmentId { get; set; }
     }
 }
-

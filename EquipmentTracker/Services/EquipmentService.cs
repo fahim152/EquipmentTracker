@@ -1,6 +1,7 @@
+using EquipmentTracker.Domain.DTOs;
+using EquipmentTracker.Domain.Enum;
 using EquipmentTracker.Domain.Model;
 using EquipmentTracker.Repositories;
-using EquipmentTracker.Services.Events;
 using EquipmentTracker.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;

@@ -1,4 +1,5 @@
 using System;
+using EquipmentTracker.Domain.Enum;
 
 namespace EquipmentTracker.Domain.Model
 {

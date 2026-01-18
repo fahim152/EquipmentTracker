@@ -1,4 +1,5 @@
 using EquipmentTracker.Data;
+using EquipmentTracker.Domain.Enum;
 using EquipmentTracker.Domain.Model;
 using Microsoft.EntityFrameworkCore;
 

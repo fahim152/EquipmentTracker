@@ -1,4 +1,4 @@
-namespace EquipmentTracker.Domain.Model
+namespace EquipmentTracker.Domain.Enum
 {
     public enum EquipmentState
     {
@@ -7,4 +7,3 @@ namespace EquipmentTracker.Domain.Model
         Green
     }
 }
-

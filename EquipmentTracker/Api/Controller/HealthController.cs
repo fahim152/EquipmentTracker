@@ -1,4 +1,4 @@
-using EquipmentTracker.Domain.Model;
+using EquipmentTracker.Domain.DTOs;
 using EquipmentTracker.Data;
 using EquipmentTracker.Services;
 using Microsoft.AspNetCore.Mvc;

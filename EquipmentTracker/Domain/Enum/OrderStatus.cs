@@ -1,4 +1,4 @@
-namespace EquipmentTracker.Domain.Model
+namespace EquipmentTracker.Domain.Enum
 {
     public enum OrderStatus
     {
@@ -9,4 +9,3 @@ namespace EquipmentTracker.Domain.Model
         Cancelled
     }
 }
-

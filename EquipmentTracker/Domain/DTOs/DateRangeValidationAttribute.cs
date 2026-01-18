@@ -1,6 +1,7 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace EquipmentTracker.Domain.Model.DTOs
+namespace EquipmentTracker.Domain.DTOs
 {
     public class DateRangeValidationAttribute : ValidationAttribute
     {
@@ -42,4 +43,3 @@ namespace EquipmentTracker.Domain.Model.DTOs
         }
     }
 }
-

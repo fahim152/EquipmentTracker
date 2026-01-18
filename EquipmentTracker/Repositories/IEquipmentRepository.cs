@@ -1,3 +1,4 @@
+using EquipmentTracker.Domain.Enum;
 using EquipmentTracker.Domain.Model;
 using System;
 using System.Collections.Generic;

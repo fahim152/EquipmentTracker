@@ -6,7 +6,7 @@ using DotPulsar;
 using DotPulsar.Abstractions;
 using DotPulsar.Extensions;
 using EquipmentTracker.Hubs;
-using EquipmentTracker.Services.Events;
+using EquipmentTracker.Domain.DTOs;
 
 namespace EquipmentTracker.Infrastructure
 {

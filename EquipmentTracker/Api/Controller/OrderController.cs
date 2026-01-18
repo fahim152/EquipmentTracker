@@ -1,5 +1,6 @@
+using EquipmentTracker.Domain.DTOs;
+using EquipmentTracker.Domain.Enum;
 using EquipmentTracker.Domain.Model;
-using EquipmentTracker.Domain.Model.DTOs;
 using EquipmentTracker.Services;
 using Microsoft.AspNetCore.Mvc;
 

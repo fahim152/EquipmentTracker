@@ -1,4 +1,4 @@
-namespace EquipmentTracker.Domain.Model
+namespace EquipmentTracker.Domain.Enum
 {
     public enum OrderPriority
     {
@@ -8,4 +8,3 @@ namespace EquipmentTracker.Domain.Model
         Critical
     }
 }
-
